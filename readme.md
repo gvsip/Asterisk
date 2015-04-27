@@ -33,30 +33,18 @@ refresh_token=(token obtained from GVsip.com)
 
 So it should look something like this for each of your Google Accounts
 >[google]
-
-type=client
-
-serverhost=talk.google.com
-
-username=(username obtained from)
-
-;secret=(your plain text password)
-
-refresh_token=(token obtained from GVsip.com)
-
-priority=25
-
-port=5222
-
-usetls=yes
-
-usesasl=yes
-
-status=available
-
-statusmessage="I am using OAUTH2.0 now! Woot!"
-
-timeout=5
+>type=client
+>serverhost=talk.google.com
+>username=(username obtained from)
+>;secret=(your plain text password)
+>refresh_token=(token obtained from GVsip.com)
+>priority=25
+>port=5222
+>usetls=yes
+>usesasl=yes
+>status=available
+>statusmessage="I am using OAUTH2.0 now! Woot!"
+>timeout=5
 
 
  **To complete the installation:**

@@ -1,14 +1,15 @@
-Welcome to GVsip!
+Welcome to GVsip - Asterisk OAUTH2.0 connection with Google Voice!
 ===================
 
 
 Upgrade Asterisk to an OAUTH2.0 connection with Google Voice
-GVsip is now Introducing a direct integration with Google Voice using OAUTH2.0 for Asterisk.
 
 The project is a modification of res_xmpp written by  Matt O'Gorman and Joshua Colp.
 
 More information about using Google Voice with Asterisk can be found here 
 https://wiki.asterisk.org/wiki/display/AST/Calling+using+Google
+
+If you would like to get involved or need support visit http://www.gvsip.org 
 
 ----------
 
@@ -33,17 +34,29 @@ refresh_token=(token obtained from GVsip.com)
 
 So it should look something like this for each of your Google Accounts
 >[google]
+
 >type=client
+
 >serverhost=talk.google.com
+
 >username=(username obtained from)
+
 >;secret=(your plain text password)
+
 >refresh_token=(token obtained from GVsip.com)
+
 >priority=25
+
 >port=5222
+
 >usetls=yes
+
 >usesasl=yes
+
 >status=available
+
 >statusmessage="I am using OAUTH2.0 now! Woot!"
+
 >timeout=5
 
 

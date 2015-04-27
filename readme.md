@@ -1,4 +1,4 @@
-Welcome to GVsip - Asterisk OAUTH2.0 connection with Google Voice!
+Asterisk OAUTH2.0 connection with Google Voice
 ===================
 
 

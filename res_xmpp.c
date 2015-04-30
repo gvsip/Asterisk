@@ -326,7 +326,13 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 428681 $")
 					<synopsis>XMPP password</synopsis>
 				</configOption>
 				<configOption name="refresh_token">
-					<synopsis>XMPP refresh token</synopsis>
+					<synopsis>Google OAUTH2 refresh token</synopsis>
+				</configOption>
+				<configOption name="client_id">
+					<synopsis>Google OAUTH2 client ID</synopsis>
+				</configOption>
+				<configOption name="client_secret">
+					<synopsis>Google OAUTH2 client secret</synopsis>
 				</configOption>
 
 				<configOption name="serverhost">
@@ -467,7 +473,9 @@ struct ast_xmpp_client_config {
 		AST_STRING_FIELD(name);        /*!< Name of the client connection */
 		AST_STRING_FIELD(user);        /*!< Username to use for authentication */
 		AST_STRING_FIELD(password);    /*!< Password to use for authentication */
-		AST_STRING_FIELD(refresh_token);    /*!< Password to use for authentication */
+		AST_STRING_FIELD(refresh_token);    /*!< Refresh token to use for authentication */
+		AST_STRING_FIELD(client_id);    /*!< Client ID to use for authentication */
+		AST_STRING_FIELD(client_secret);    /*!< Client secret to use for authentication */
 		AST_STRING_FIELD(server);      /*!< Server hostname */
 		AST_STRING_FIELD(statusmsg);   /*!< Status message for presence */
 		AST_STRING_FIELD(pubsubnode);  /*!< Pubsub node */
@@ -774,6 +782,12 @@ static int xmpp_config_prelink(void *newitem)
 	} else if (ast_strlen_zero(clientcfg->refresh_token)) {
 		ast_log(LOG_ERROR, "No refresh_token specified on client '%s'\n", clientcfg->name);
 		return -1;
+	} else if (ast_strlen_zero(clientcfg->client_id)) {
+		ast_log(LOG_ERROR, "No client_id specified on client '%s'\n", clientcfg->name);
+		return -1;
+	} else if (ast_strlen_zero(clientcfg->client_secret)) {
+		ast_log(LOG_ERROR, "No client_secret specified on client '%s'\n", clientcfg->name);
+		return -1;
 	} else if (ast_strlen_zero(clientcfg->server)) {
 		ast_log(LOG_ERROR, "No server specified on client '%s'\n", clientcfg->name);
 		return -1;
@@ -788,6 +802,8 @@ static int xmpp_config_prelink(void *newitem)
 	/* If any configuration options are changing that would require reconnecting set the bit so we will do so if possible */
 	if (strcmp(clientcfg->user, oldclientcfg->user) ||
 	    strcmp(clientcfg->refresh_token, oldclientcfg->refresh_token) ||
+	    strcmp(clientcfg->client_id, oldclientcfg->client_id) ||
+	    strcmp(clientcfg->client_secret, oldclientcfg->client_secret) ||
 	    strcmp(clientcfg->server, oldclientcfg->server) ||
 	    (clientcfg->port != oldclientcfg->port) ||
 	    (ast_test_flag(&clientcfg->flags, XMPP_COMPONENT) != ast_test_flag(&oldclientcfg->flags, XMPP_COMPONENT)) ||
@@ -3855,11 +3871,9 @@ static void fetch_access_token(struct ast_xmpp_client_config *cfg) {
 	char cmd[4096];
 	char cBuf[4096];
 	const char * url = "https://www.googleapis.com/oauth2/v3/token";
-	const char * client_id = "470306186573-jtdetm9fb2b28k4gumaleamea7a14deh.apps.googleusercontent.com";
-	const char * client_secret = "zWK1W_I-4ZlfRoFnYRoGhsrB";
 
 	memset(cmd , 0 , sizeof(cmd));
-	snprintf(cmd , sizeof(cmd) - 1 , "CURL(%s,client_id=%s&client_secret=%s&refresh_token=%s&grant_type=refresh_token)" , url, client_id, client_secret, cfg->refresh_token);
+	snprintf(cmd , sizeof(cmd) - 1 , "CURL(%s,client_id=%s&client_secret=%s&refresh_token=%s&grant_type=refresh_token)" , url, cfg->client_id, cfg->client_secret, cfg->refresh_token);
 
 	ast_log(LOG_NOTICE , "Command %s\n" , cmd);
 
@@ -4647,6 +4661,8 @@ static int load_module(void)
 
 	aco_option_register(&cfg_info, "username", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, user));
 	aco_option_register(&cfg_info, "refresh_token", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, refresh_token));
+	aco_option_register(&cfg_info, "client_id", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, client_id));
+	aco_option_register(&cfg_info, "client_secret", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, client_secret));
 	aco_option_register(&cfg_info, "serverhost", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, server));
 	aco_option_register(&cfg_info, "statusmessage", ACO_EXACT, client_options, "Online and Available", OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, statusmsg));
 	aco_option_register(&cfg_info, "pubsub_node", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, pubsubnode));

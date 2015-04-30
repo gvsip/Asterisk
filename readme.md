@@ -29,8 +29,6 @@ To install the modification you need to be installing asterisk from source.  (So
 > - The username and refresh_token will now be displayed on the next screen.  
 > - Repeat as necessary for all of your Google Voice Accounts 
 > - Then modify your asterisk configuration /etc/asterisk/xmpp.conf 
-Instead of using secret=(password) comment that out an insert 
-refresh_token=(token obtained from GVsip.com)
 
 So it should look something like this for each of your Google Accounts
 >[google]
@@ -41,9 +39,7 @@ So it should look something like this for each of your Google Accounts
 
 >username=(username obtained from)
 
->;secret=(your plain text password)
-
->refresh_token=(token obtained from GVsip.com)
+>secret=(refresh_token obtained from GVsip.com)
 
 >priority=25
 

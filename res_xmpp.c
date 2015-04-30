@@ -328,7 +328,6 @@ ASTERISK_FILE_VERSION(__FILE__, "$Revision: 428681 $")
 				<configOption name="refresh_token">
 					<synopsis>XMPP refresh token</synopsis>
 				</configOption>
-
 				<configOption name="serverhost">
 					<synopsis>Route to server, e.g. talk.google.com</synopsis>
 				</configOption>
@@ -4646,7 +4645,7 @@ static int load_module(void)
 	aco_option_register_custom(&cfg_info, "auth_policy", ACO_EXACT, global_options, "accept", global_bitfield_handler, 0);
 
 	aco_option_register(&cfg_info, "username", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, user));
-	aco_option_register(&cfg_info, "refresh_token", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, refresh_token));
+	aco_option_register(&cfg_info, "secret", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, refresh_token));
 	aco_option_register(&cfg_info, "serverhost", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, server));
 	aco_option_register(&cfg_info, "statusmessage", ACO_EXACT, client_options, "Online and Available", OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, statusmsg));
 	aco_option_register(&cfg_info, "pubsub_node", ACO_EXACT, client_options, NULL, OPT_STRINGFIELD_T, 0, STRFLDSET(struct ast_xmpp_client_config, pubsubnode));

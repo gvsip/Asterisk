@@ -1,10 +1,9 @@
 /*
  * Asterisk -- An open source telephony toolkit.
  *
- * Copyright (C) 2015, GVsip
+ * Copyright (C) 2012, Digium, Inc.
  *
- * GVsip <support@gvsip.com>
- * Visit http://www.gvsip.org for more information.
+ * Joshua Colp <jcolp@digium.com>
  *
  * See http://www.asterisk.org for more information about
  * the Asterisk project. Please do not directly contact
@@ -21,14 +20,14 @@
  *
  * \brief XMPP client and component module.
  *
- * \author GVsip <support@gvsip.com>
+ * \author Joshua Colp <jcolp@digium.com>
  *
  * Iksemel http://code.google.com/p/iksemel/
  *
  * A reference module for interfacting Asterisk directly as a client or component with
  * an XMPP/Jabber compliant server.
  *
- * This module is based upon the original res_jabber and res_xmpp as done by Matt O'Gorman and Joshua Colp <jcolp@digium.com>.
+ * This module is based upon the original res_jabber and res_xmpp as done by Matt O'Gorman.
  *
  */
 
